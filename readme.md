@@ -31,9 +31,12 @@
 
 ## Database Diagram
 
-> You can access to the database dump at `/mysql/dumps/`
+> ℹ️ You can access to the database dump at `/mysql/dumps/`
 
 ![DataBase Diagram](DBstructure.png)
+
+> Diagram updated version: **0.0.0**.
+> Please check again with database dump if it's different with the current version. I might forget to update it.
 
 ## Tech Stack
 
@@ -47,6 +50,8 @@
 
 ### Objects
 
+<a name="theme-object"></a>
+
 <details>
 <summary>
 <code><b>Theme</b></code>
@@ -55,18 +60,18 @@
 
 ##### Theme
 
-> | key         | description                                | type   | default  |
-> | ----------- | ------------------------------------------ | ------ | -------- |
-> | idx         | The identified number of the theme         | Int    |          |
-> | name        | The name or the title of the theme         | String |          |
-> | time_limit  | The theme's limit time in minutes          | Int    | `60`     |
-> | icon        | The theme's icon image URL                 | String |          |
-> | theme_color | The CSS color code of the theme main color | String | `'#000'` |
-> | createdAt   | When the theme has been created            | Date   |          |
-> | updatedAt   | When the theme has been updated at last    | Date   |          |
+> | key         | description                               | type   | default  |
+> | ----------- | ----------------------------------------- | ------ | -------- |
+> | idx         | The identified number of the theme        | Int    |          |
+> | name        | The name or the title of the theme        | String |          |
+> | time_limit  | The theme's limit time in minutes         | Int    | `60`     |
+> | icon        | The theme's icon image URL                | String |          |
+> | theme_color | Common CSS color of the theme point color | String | `'#000'` |
+> | createdAt   | When the theme has been created           | Date   |          |
+> | updatedAt   | When the theme has been updated at last   | Date   |          |
 
 </details>
-
+<a name="play_info-object"></a>
 <details>
 <summary>
 <code><b>Play_info</b></code>
@@ -87,18 +92,19 @@
 > | createdAt   | When the data has been created                                   | Date |         |
 > | updatedAt   | When the data has been updated at last                           | Date |         |
 
-##### Playing status
+##### Playing status value table
 
-> | Value | meaning                                    |
+> Negative numbers mean 'cannot access to the device'.
+> | Value | meaning |
 > | ----- | ------------------------------------------ |
-> | `0`   | Ready                                      |
-> | `1`   | Playing                                    |
-> | `2`   | Paused                                     |
-> | `-1`  | Ended                                      |
-> | `-2`  | Disconnected(Not sure if it would be used) |
+> | `0` | Ready |
+> | `1` | Playing |
+> | `2` | Paused |
+> | `-1` | Ended |
+> | `-2` | Disconnected(Not sure if it would be used) |
 
 </details>
-
+<a name="player_info-object"></a>
 <details>
 <summary>
 <code><b>Player_info</b></code>
@@ -113,7 +119,7 @@
 > | tel  | The Telephone number of the player | String |         |
 
 </details>
-
+<a name="hint-object"></a>
 <details>
 <summary>
 <code><b>Hint</b></code>
@@ -130,7 +136,7 @@
 > | contents | Each element contains `idx(Int)`, `contents(String)`, `step(Int)`. | Array  |         |
 
 </details>
-
+<a name="account-object"></a>
 <details>
 <summary>
 <code><b>Account</b></code>
@@ -143,7 +149,6 @@
 > | --------- | ------------------------------------------------- | ----------- | ------- |
 > | idx       | Identified number of the account                  | Int         |         |
 > | id        | Account ID                                        | String      |         |
-> | password  | Account password                                  | String      |         |
 > | alias     | Account alias (of course can be used as nickname) | String      |         |
 > | level     | Security level                                    | Int         | 0       |
 > | data      | Additional data                                   | JSON String |         |
@@ -152,7 +157,7 @@
 
 ##### Security Level Indicator
 
-> 'Allowed' informations are stored in `data` column.
+> ℹ️ 'Allowed' informations are stored in `data` column.
 
 > | level | account type              | accessable area                                                                                |
 > | ----- | ------------------------- | ---------------------------------------------------------------------------------------------- |
@@ -170,7 +175,7 @@
 
 ```json
 {
-    "allowed": [ {theme_idx1}, {theme_idx2}, ... ]
+    "allowed": [ theme_idx1, theme_idx2, ... ]
 }
 ```
 
@@ -182,26 +187,33 @@
 <code>(A single Configuration)</code>
 </summary>
 
-> This table is free to use depending on how the clients work.
+> ℹ️ This table is free to use depending on how the clients work.
 
 ##### Setting
 
-> | key   | description  | type   | default |
-> | ----- | ------------ | ------ | ------- |
-> | label | config label | String |         |
-> | value | config value | String |         |
+> | key        | description                                      | type   | default |
+> | ---------- | ------------------------------------------------ | ------ | ------- |
+> | label      | config label                                     | String |         |
+> | value      | config value                                     | String |         |
+> | read_level | The lowest account level that can read this data | Int    | 0       |
+> | edit_level | The lowest account level that can edit this data | Int    | 5       |
 
 ##### Configurations List
 
-> | label | description | default value |
-> | ----- | ----------- | ------------- |
-> |       |             |               |
+> | label         | description                              | default value | read level | edit level |
+> | ------------- | ---------------------------------------- | ------------- | ---------- | ---------- |
+> | loading_image | will be shown when every clients loading |               | `1`        | `9`        |
+> | hint_image_1  | will be shown on step 1 hint page        |               | `1`        | `9`        |
+> | hint_image_2  | will be shown on step 2 hint page        |               | `1`        | `9`        |
+> | hint_image_2  | will be shown on step 3 hint page        |               | `1`        | `9`        |
 
 </details>
 
+---
+
 ### Endpoints
 
-> Every restful endpoints are start with **`http(s)://{HOST}/api`**.
+> ℹ️ Every restful endpoint paths are start with **`http(s)://{HOST}/api`**.
 
 #### Theme
 
@@ -228,12 +240,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -254,12 +266,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `200`     | `application/json` | Array of [Theme](#Theme)                   |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `200`     | `application/json` | Array of [Theme](#theme-object) |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -292,12 +304,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -324,12 +336,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                             |
-> | --------- | ------------------ | ---------------------------------------------------- |
-> | `200`     | `application/json` | [Theme](#Theme) but contains Array of [Hint](#Hint)s |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`              |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}`           |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`             |
+> | http code | content-type       | response                                                           |
+> | --------- | ------------------ | ------------------------------------------------------------------ |
+> | `200`     | `application/json` | [Theme](#theme-object) but contains Array of [Hint](#hint-object)s |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`                                       |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`                                    |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`                                      |
 
 </details>
 
@@ -366,12 +378,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -404,12 +416,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -443,12 +455,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -482,12 +494,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -524,12 +536,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -563,12 +575,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `200`     | `application/json` | Array of [Play_info](#Play_info)           |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                                |
+> | --------- | ------------------ | --------------------------------------- |
+> | `200`     | `application/json` | Array of [Play_info](#play_info-object) |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`            |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`         |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`           |
 
 </details>
 
@@ -601,12 +613,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}`      |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -639,12 +651,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `201`     | `application/json` | `{"message": "Added Successfully"}`        |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                            |
+> | --------- | ------------------ | ----------------------------------- |
+> | `201`     | `application/json` | `{"message": "Added Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`        |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`     |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`       |
 
 </details>
 
@@ -671,12 +683,12 @@
 
 ##### Responses
 
-> | http code | content-type       | response                                   |
-> | --------- | ------------------ | ------------------------------------------ |
-> | `200`     | `application/json` | Array of [Player_info](#Player_info)       |
-> | `401`     | `application/json` | `{"code":401,"message":"Unauthorized"}`    |
-> | `403`     | `application/json` | `{"code":403,"message":"Low Security Lv"}` |
-> | `500`     | `application/json` | `{"code":500,"message":"Unknown Error"}`   |
+> | http code | content-type       | response                                    |
+> | --------- | ------------------ | ------------------------------------------- |
+> | `200`     | `application/json` | Array of [Player_info](#player_info-object) |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`                |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`             |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`               |
 
 </details>
 
@@ -685,28 +697,226 @@
 <details>
 
 <summary>
-<code>GET</code>
-<code><b>/account/login </b></code>
-<code>()</code>
+<code>POST</code>
+<code><b>/account</b></code>
+<code>(Create new account)</code>
 </summary>
 
 ##### Headers
 
-> | name          | required | data type | description |
-> | ------------- | -------- | --------- | ----------- |
-> | Authorization | Y        | String    |             |
+> | name             | required | data type | description                |
+> | ---------------- | -------- | --------- | -------------------------- |
+> | Authorization-id | Y        | String    | Requires level 6 or higher |
+> | Authorization-pw | Y        | String    |                            |
 
-##### Parameters
+##### Body
 
-> | name | required | data type | description |
-> | ---- | -------- | --------- | ----------- |
-> |      | Y        |           |             |
+> | name     | required | data type   | description                          |
+> | -------- | -------- | ----------- | ------------------------------------ |
+> | id       | Y        | String      | The length must be 16 or shorter.    |
+> | password | Y        | String      |                                      |
+> | alias    | N        | String      | The length must be 100 or shorter.   |
+> | level    | N        | Int         | The default value is `0`.            |
+> | data     | N        | JSON String | Refer to [Account](#account-object). |
 
 ##### Responses
 
-> | http code | content-type               | response                                |
-> | --------- | -------------------------- | --------------------------------------- |
-> | `201`     | `text/plain;charset=UTF-8` |                                         |
-> | `401`     | `application/json`         | `{"code":401,"message":"Unauthorized"}` |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+
+</details>
+
+<details>
+
+<summary>
+<code>GET</code>
+<code><b>/account/{id}</b></code>
+<code>(Get account infotmation and also can be used for logging in)</code>
+</summary>
+
+##### Headers
+
+> | name             | required | data type | description                                             |
+> | ---------------- | -------- | --------- | ------------------------------------------------------- |
+> | Authorization-id | Y        | String    | If it's not equal to `{id}`, requires level 6 or higher |
+> | Authorization-pw | Y        | String    |                                                         |
+
+##### Parameters
+
+> | name | data type | description       |
+> | ---- | --------- | ----------------- |
+> | id   | String    | Target account ID |
+
+##### Responses
+
+> | http code | content-type       | response                      |
+> | --------- | ------------------ | ----------------------------- |
+> | `200`     | `application/json` | [Account](#account-object)    |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`  |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}` |
+
+</details>
+
+<details>
+
+<summary>
+<code>PATCH</code>
+<code><b>/account/{idx}</b></code>
+<code>(Update the account information)</code>
+</summary>
+
+##### Headers
+
+> | name             | required | data type | description                |
+> | ---------------- | -------- | --------- | -------------------------- |
+> | Authorization-id | Y        | String    | Requires level 6 or higher |
+> | Authorization-pw | Y        | String    |                            |
+
+##### Parameters
+
+> | name | data type | description        |
+> | ---- | --------- | ------------------ |
+> | idx  | Int       | Target account idx |
+
+##### Body
+
+> | name       | required | data type | description                                      |
+> | ---------- | -------- | --------- | ------------------------------------------------ |
+> | updateData | Y        | Object    | `{"{updatingValueKey}": "{valueToUpdate}", ...}` |
+
+##### Responses
+
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+
+</details>
+
+<details>
+
+<summary>
+<code>GET</code>
+<code><b>/account/list</b></code>
+<code>(Get list of every available accounts list)</code>
+</summary>
+
+##### Headers
+
+> | name             | required | data type | description                |
+> | ---------------- | -------- | --------- | -------------------------- |
+> | Authorization-id | Y        | String    | Requires level 6 or higher |
+> | Authorization-pw | Y        | String    |                            |
+
+##### Responses
+
+> | http code | content-type       | response                            |
+> | --------- | ------------------ | ----------------------------------- |
+> | `200`     | `application/json` | Array of [Account](#account-object) |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`        |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`     |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`       |
+
+</details>
+
+#### System
+
+<details>
+
+<summary>
+<code>GET</code>
+<code><b>/system/setting</b></code>
+<code>(Get every accessable setting data)</code>
+</summary>
+
+##### Headers
+
+> | name             | required | data type | description |
+> | ---------------- | -------- | --------- | ----------- |
+> | Authorization-id | Y        | String    |             |
+> | Authorization-pw | Y        | String    |             |
+
+##### Responses
+
+> | http code | content-type       | response                                                                                                 |
+> | --------- | ------------------ | -------------------------------------------------------------------------------------------------------- |
+> | `200`     | `application/json` | Array of [Setting](#setting-object), except `edit_level` when it's higher than requested account's level |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`                                                                             |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`                                                                          |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`                                                                            |
+
+</details>
+
+<details>
+
+<summary>
+<code>PATCH</code>
+<code><b>/system/setting</b></code>
+<code>(Patch system settings)</code>
+</summary>
+
+> -   ⚠️ It'll be executed only when every `edit_level`s of target rows are equal to or higher than the level of the requesting account.
+> -   ⚠️ the `edit_level` and the `read_level` is can never be changed.
+
+##### Headers
+
+> | name             | required | data type | description |
+> | ---------------- | -------- | --------- | ----------- |
+> | Authorization-id | Y        | String    |             |
+> | Authorization-pw | Y        | String    |             |
+
+##### Body
+
+> | name       | required | data type | description                                      |
+> | ---------- | -------- | --------- | ------------------------------------------------ |
+> | updateData | Y        | Object    | `{"{updatingValueKey}": "{valueToUpdate}", ...}` |
+
+##### Responses
+
+> | http code | content-type       | response                             |
+> | --------- | ------------------ | ------------------------------------ |
+> | `201`     | `application/json` | `{"message":"Patched Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`         |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`      |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`        |
+
+</details>
+
+<details>
+
+<summary>
+<code>POST</code>
+<code><b>/system/image</b></code>
+<code>(Upload an image file)</code>
+</summary>
+
+##### Headers
+
+> | name             | required | data type | description                |
+> | ---------------- | -------- | --------- | -------------------------- |
+> | Authorization-id | Y        | String    | Requires level 5 or higher |
+> | Authorization-pw | Y        | String    |                            |
+
+##### Form Data
+
+> | name  | required | data type | description                                                           |
+> | ----- | -------- | --------- | --------------------------------------------------------------------- |
+> | image | Y        | blob      | File size must be less than 2mb, allowed only: .jpg, .png, .bmp, .gif |
+
+##### Responses
+
+> | http code | content-type       | response                                    |
+> | --------- | ------------------ | ------------------------------------------- |
+> | `201`     | `application/json` | `{"message":"{file_name_uuid}"}`            |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`                |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`             |
+> | `413`     | `application/json` | `{"message":"Too Large File"}`              |
+> | `415`     | `application/json` | `{"message":"Only Image Files Be Allowed"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`               |
 
 </details>

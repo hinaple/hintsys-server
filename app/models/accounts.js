@@ -13,7 +13,11 @@ module.exports = function(sequelize, DataTypes) {
       unique: "alias_UNIQUE"
     },
     password: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.CHAR(64),
+      allowNull: false
+    },
+    salt: {
+      type: DataTypes.CHAR(4),
       allowNull: false
     },
     alias: {

@@ -14,6 +14,16 @@ module.exports = function(sequelize, DataTypes) {
     value: {
       type: DataTypes.STRING(100),
       allowNull: true
+    },
+    edit_level: {
+      type: DataTypes.TINYINT.UNSIGNED,
+      allowNull: false,
+      defaultValue: 5
+    },
+    read_level: {
+      type: DataTypes.TINYINT.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,
