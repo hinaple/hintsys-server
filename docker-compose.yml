@@ -21,7 +21,7 @@ services:
         build:
             context: ./app
         ports:
-            - "${MOCKSAT_PORT}:3001"
+            - "${HINTSYS_PORT}:3001"
         volumes:
             - ./app/public:/app/public
         environment:

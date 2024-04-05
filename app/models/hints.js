@@ -9,7 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     theme_idx: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'themes',
+        key: 'idx'
+      }
     },
     code: {
       type: DataTypes.STRING(10),
@@ -18,6 +22,11 @@ module.exports = function(sequelize, DataTypes) {
     progress: {
       type: DataTypes.FLOAT,
       allowNull: true
+    },
+    order: {
+      type: DataTypes.SMALLINT.UNSIGNED,
+      allowNull: false,
+      defaultValue: 0
     }
   }, {
     sequelize,
@@ -33,7 +42,7 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "theme idx_idx",
+        name: "hint theme link_idx",
         using: "BTREE",
         fields: [
           { name: "theme_idx" },

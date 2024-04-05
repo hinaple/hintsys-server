@@ -9,7 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     play_info_idx: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'play_infos',
+        key: 'idx'
+      }
     },
     name: {
       type: DataTypes.STRING(20),

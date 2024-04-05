@@ -9,7 +9,11 @@ module.exports = function(sequelize, DataTypes) {
     },
     hint_idx: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'hints',
+        key: 'idx'
+      }
     },
     contents: {
       type: DataTypes.STRING(5000),

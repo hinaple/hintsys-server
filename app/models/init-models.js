@@ -16,6 +16,14 @@ function initModels(sequelize) {
   var settings = _settings(sequelize, DataTypes);
   var themes = _themes(sequelize, DataTypes);
 
+  hint_contents.belongsTo(hints, { as: "hint_idx_hint", foreignKey: "hint_idx"});
+  hints.hasMany(hint_contents, { as: "hint_contents", foreignKey: "hint_idx"});
+  player_infos.belongsTo(play_infos, { as: "play_info_idx_play_info", foreignKey: "play_info_idx"});
+  play_infos.hasMany(player_infos, { as: "player_infos", foreignKey: "play_info_idx"});
+  hints.belongsTo(themes, { as: "theme_idx_theme", foreignKey: "theme_idx"});
+  themes.hasMany(hints, { as: "hints", foreignKey: "theme_idx"});
+  play_infos.belongsTo(themes, { as: "theme_idx_theme", foreignKey: "theme_idx"});
+  themes.hasMany(play_infos, { as: "play_infos", foreignKey: "theme_idx"});
 
   return {
     accounts,

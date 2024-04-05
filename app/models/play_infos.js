@@ -9,12 +9,16 @@ module.exports = function(sequelize, DataTypes) {
     },
     theme_idx: {
       type: DataTypes.INTEGER.UNSIGNED,
-      allowNull: false
+      allowNull: false,
+      references: {
+        model: 'themes',
+        key: 'idx'
+      }
     },
     status: {
-      type: DataTypes.STRING(5),
-      allowNull: true,
-      defaultValue: "ready"
+      type: DataTypes.TINYINT,
+      allowNull: false,
+      defaultValue: 0
     },
     startedAt: {
       type: DataTypes.DATE,
