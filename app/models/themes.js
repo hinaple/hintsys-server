@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('themes', {
     idx: {
       autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
@@ -12,7 +12,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     time_limit: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.SMALLINT.UNSIGNED,
       allowNull: false,
       defaultValue: 60
     },

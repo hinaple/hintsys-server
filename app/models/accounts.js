@@ -1,41 +1,37 @@
 const Sequelize = require('sequelize');
 module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('play_infos', {
+  return sequelize.define('accounts', {
     idx: {
       autoIncrement: true,
       type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
-    theme_idx: {
-      type: DataTypes.INTEGER.UNSIGNED,
+    id: {
+      type: DataTypes.CHAR(16),
+      allowNull: false,
+      unique: "alias_UNIQUE"
+    },
+    password: {
+      type: DataTypes.STRING(100),
       allowNull: false
     },
-    status: {
-      type: DataTypes.STRING(5),
-      allowNull: true,
-      defaultValue: "ready"
-    },
-    startedAt: {
-      type: DataTypes.DATE,
+    alias: {
+      type: DataTypes.STRING(100),
       allowNull: true
     },
-    pausedAt: {
-      type: DataTypes.DATE,
-      allowNull: true
-    },
-    add_sec: {
-      type: DataTypes.INTEGER,
+    level: {
+      type: DataTypes.TINYINT,
       allowNull: false,
       defaultValue: 0
     },
-    device_info: {
-      type: DataTypes.INTEGER,
+    data: {
+      type: DataTypes.STRING(500),
       allowNull: true
     }
   }, {
     sequelize,
-    tableName: 'play_infos',
+    tableName: 'accounts',
     timestamps: true,
     indexes: [
       {
@@ -47,10 +43,11 @@ module.exports = function(sequelize, DataTypes) {
         ]
       },
       {
-        name: "THEME_PLAY_idx",
+        name: "alias_UNIQUE",
+        unique: true,
         using: "BTREE",
         fields: [
-          { name: "theme_idx" },
+          { name: "id" },
         ]
       },
     ]

@@ -3,17 +3,13 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('hints', {
     idx: {
       autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
     theme_idx: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'themes',
-        key: 'idx'
-      }
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
     },
     code: {
       type: DataTypes.STRING(10),

@@ -3,17 +3,13 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('player_infos', {
     idx: {
       autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
     play_info_idx: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: 'play_infos',
-        key: 'idx'
-      }
+      type: DataTypes.INTEGER.UNSIGNED,
+      allowNull: false
     },
     name: {
       type: DataTypes.STRING(20),

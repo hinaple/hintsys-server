@@ -3,7 +3,7 @@ module.exports = function(sequelize, DataTypes) {
   return sequelize.define('settings', {
     idx: {
       autoIncrement: true,
-      type: DataTypes.INTEGER,
+      type: DataTypes.INTEGER.UNSIGNED,
       allowNull: false,
       primaryKey: true
     },
