@@ -2,15 +2,17 @@
     "development": {
         "username": "root",
         "password": null,
-        "database": "database_development",
+        "database": "hintsys",
         "host": "127.0.0.1",
-        "dialect": "mysql"
+        "dialect": "mysql",
+        "query": { "raw": true }
     },
     "production": {
         "username": "root",
         "password": null,
-        "database": "database_production",
+        "database": "hintsys",
         "host": "127.0.0.1",
-        "dialect": "mysql"
+        "dialect": "mysql",
+        "query": { "raw": true }
     }
 }

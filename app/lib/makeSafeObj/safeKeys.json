@@ -1,0 +1,35 @@
+{
+    "theme": [
+        "idx",
+        "name",
+        "time_limit",
+        "icon",
+        "theme_color",
+        "createdAt",
+        "updatedAt"
+    ],
+    "play_info": [
+        "idx",
+        "theme_idx",
+        "status",
+        "startedAt",
+        "pausedAt",
+        "add_sec",
+        "device_info",
+        "createdAt",
+        "updatedAt"
+    ],
+    "player_info": ["name", "tel"],
+    "hint": ["idx", "code", "progress"],
+    "hint_content": ["idx", "step", "contents"],
+    "account": [
+        "idx",
+        "id",
+        "alias",
+        "level",
+        "data",
+        "createdAt",
+        "updatedAt"
+    ],
+    "setting": ["label", "value", "read_level", "edit_level"]
+}

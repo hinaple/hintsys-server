@@ -44,6 +44,16 @@
 | ---------- | --------- | -------- |
 | Express.js | Socket.io | MySQL    |
 
+## Environment File
+
+> ℹ️ Create an environment file at `/.env`.
+
+```
+HINTSYS_PORT={MAIN_SYSTEM_OUT_PORT}
+MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}
+MYSQL_PORT={MYSQL_OUT_PORT}
+```
+
 ---
 
 ## Document
@@ -173,14 +183,14 @@
 
 ##### `data` column form
 
-```json
+```
 {
     "allowed": [ theme_idx1, theme_idx2, ... ]
 }
 ```
 
 </details>
-
+<a name="setting-object"></a>
 <details>
 <summary>
 <code><b>Setting</b></code>
@@ -213,7 +223,7 @@
 
 ### Endpoints
 
-> ℹ️ Every restful endpoint paths are start with **`http(s)://{HOST}/api`**.
+> ℹ️ Every restful endpoint paths start with **`http(s)://{HOST}/api`**.
 
 #### Theme
 
@@ -429,7 +439,7 @@
 
 <summary>
 <code>POST</code>
-<code><b>/hint/{hint-idx}/content</b></code>
+<code><b>/hint/content/{hint-idx}</b></code>
 <code>(Create new hint content)</code>
 </summary>
 
@@ -451,7 +461,7 @@
 > | name     | required | data type | description                                 |
 > | -------- | -------- | --------- | ------------------------------------------- |
 > | contents | N        | String    | The hint content. Using common HTML syntax. |
-> | step     | N        | Int       | The hint step.                              |
+> | step     | N        | Int       | The hint step. The default step is `1`.     |
 
 ##### Responses
 
@@ -468,7 +478,7 @@
 
 <summary>
 <code>PATCH</code>
-<code><b>/hint/{content-idx}/content</b></code>
+<code><b>/hint/content/{content-idx}</b></code>
 <code>(Update the hint content)</code>
 </summary>
 
@@ -490,7 +500,7 @@
 > | name     | required | data type | description                                 |
 > | -------- | -------- | --------- | ------------------------------------------- |
 > | contents | N        | String    | The hint content. Using common HTML syntax. |
-> | step     | N        | Int       | The hint step. The default step is `1`.     |
+> | step     | N        | Int       | The hint step.                              |
 
 ##### Responses
 
@@ -504,6 +514,45 @@
 </details>
 
 #### Play Information
+
+<details>
+
+<summary>
+<code>GET</code>
+<code><b>/playinfo/{theme-idx}/list</b></code>
+<code>(Get available playing info list)</code>
+</summary>
+
+##### Headers
+
+> | name             | required | data type | description                |
+> | ---------------- | -------- | --------- | -------------------------- |
+> | Authorization-id | Y        | String    | Requires level 3 or higher |
+> | Authorization-pw | Y        | String    |                            |
+
+##### Parameters
+
+> | name      | data type | description      |
+> | --------- | --------- | ---------------- |
+> | theme-idx | Int       | Target theme idx |
+
+##### URI Query
+
+> | name   | required | data type | description                                      |
+> | ------ | -------- | --------- | ------------------------------------------------ |
+> | status | N        | Int       | Get results only have the same `status` value    |
+> | theme  | N        | Int       | Get results only have the same `theme_idx` value |
+
+##### Responses
+
+> | http code | content-type       | response                                |
+> | --------- | ------------------ | --------------------------------------- |
+> | `200`     | `application/json` | Array of [Play_info](#play_info-object) |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`            |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`         |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`           |
+
+</details>
 
 <details>
 
@@ -542,45 +591,6 @@
 > | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
 > | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
 > | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
-
-</details>
-
-<details>
-
-<summary>
-<code>GET</code>
-<code><b>/playinfo/{theme-idx}/list</b></code>
-<code>(Get available playing info list)</code>
-</summary>
-
-##### Headers
-
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 3 or higher |
-> | Authorization-pw | Y        | String    |                            |
-
-##### Parameters
-
-> | name      | data type | description      |
-> | --------- | --------- | ---------------- |
-> | theme-idx | Int       | Target theme idx |
-
-##### URI Query
-
-> | name   | required | data type | description                                      |
-> | ------ | -------- | --------- | ------------------------------------------------ |
-> | status | N        | Int       | Get results only have the same `status` value    |
-> | theme  | N        | Int       | Get results only have the same `theme_idx` value |
-
-##### Responses
-
-> | http code | content-type       | response                                |
-> | --------- | ------------------ | --------------------------------------- |
-> | `200`     | `application/json` | Array of [Play_info](#play_info-object) |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`            |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`         |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`           |
 
 </details>
 

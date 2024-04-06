@@ -1,0 +1,13 @@
+{
+    "201": [
+        "Processed Successfully",
+        "Patched Successfully",
+        "Created Successfully",
+        "Deleted Successfully"
+    ],
+    "400": ["Wrong Request", "Required Data Missed"],
+    "401": ["Unauthorized"],
+    "403": ["Low Security Lv", "Not Allowed Account For That Data."],
+    "404": ["Data Not Found"],
+    "500": ["Unknown Error"]
+}

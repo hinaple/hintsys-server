@@ -13,7 +13,7 @@ if (config.use_env_variable) {
     sequelize = new Sequelize(
         config.database,
         config.username,
-        config.password ?? process.env.DB_PASS,
+        config.password || process.env.MYSQL_ROOT_PASSWORD,
         config
     );
 }

@@ -1,0 +1,18 @@
+[
+    "idx",
+    "createdAt",
+    "updatedAt",
+    "theme_idx",
+    "order",
+    "hint_idx",
+    "salt",
+    "password",
+    "data",
+    "device_info",
+    "edit_level",
+    "read_level",
+    "label",
+    "status",
+    "startedAt",
+    "pausedAt"
+]
