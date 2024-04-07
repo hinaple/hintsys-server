@@ -58,7 +58,7 @@
 
 | Current Version |
 | --------------- |
-| 0.0.0           |
+| 0.0.1           |
 
 ## Database Diagram
 
@@ -66,7 +66,7 @@
 
 ![DataBase Diagram](DBstructure.png)
 
-> Diagram updated version: **0.0.0**.
+> Diagram updated version: **0.0.1**.
 > Please check again with database dump if it's different with the current version. I might forgot to update it.
 
 ## Tech Stack

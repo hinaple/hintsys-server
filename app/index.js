@@ -20,6 +20,7 @@ app.use(fileUpload());
 
 // app.use(cors()); //for access from the android app
 
+app.use("/src", express.static("public"));
 app.use("/api/v1", limitUtils.limiter, apiRoutes);
 
 app.listen(3001);
