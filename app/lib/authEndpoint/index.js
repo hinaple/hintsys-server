@@ -45,8 +45,8 @@ module.exports = (path, endpoints, Router) => {
 
             [statusCode, accountInfo, msgIdx = 0] = await checkHeadAuth(
                 HeaderAuth,
-                EP.authLevel,
-                EP.authCallback,
+                typeof EP === "function" ? 0 : EP.authLevel,
+                typeof EP === "function" ? null : EP.authCallback,
                 req
             );
 
@@ -55,17 +55,21 @@ module.exports = (path, endpoints, Router) => {
                 return;
             } //the code must be 401 or 403(Authentication problem)
 
-            const cbResult = EP.callback(req, res, accountInfo);
+            const cbResult = (typeof EP === "function" ? EP : EP.callback)(
+                req,
+                res,
+                accountInfo
+            );
             let resultData;
 
             if (!cbResult) return;
-            else if (cbResult.then)
+            else if (cbResult.then) {
                 //If the callback function is an Async or a Promise
-                await cbResult
-                    .then((data) => {
-                        [statusCode, resultData] = data;
-                    })
-                    .catch((error) => {
+                const prom = cbResult.then((data) => {
+                    [statusCode, resultData] = data;
+                });
+                if (env === "production")
+                    await prom.catch((error) => {
                         console.log("An error occurred:");
                         console.log(error.name, "-", error.message);
 
@@ -77,10 +81,9 @@ module.exports = (path, endpoints, Router) => {
                             statusCode = 413;
                             resultData = 1;
                         } else statusCode = 500;
-
-                        if (env !== "production") throw new Error(error);
                     });
-            else [statusCode, resultData] = cbResult;
+                else await prom.then();
+            } else [statusCode, resultData] = cbResult;
 
             if (!resultData) {
                 //If there is a status code but no message
@@ -89,7 +92,7 @@ module.exports = (path, endpoints, Router) => {
                 //If resultData is number,
                 //it means the message is a standard but not default.
                 autoResolve(statusCode, res, resultData);
-            } else res.status(statusCode).json(resultData);
+            } else res.status(+statusCode).json(resultData);
         });
     });
 };

@@ -53,7 +53,6 @@ authEndpoint(
                     order,
                 });
 
-                if (!result[0]) return [404]; //0 row has been affected
                 return [201, { idx: result.dataValues.idx }];
             },
             authLevel: 5,

@@ -7,6 +7,10 @@ const leaveSomeKeys = require("../leaveSomeKeys");
  * `true` when user changing values directly so some keys have to be fixed
  */
 module.exports = (obj, type, userChanging = false) => {
-    if (!SafeKeys[type]) return false;
-    return leaveSomeKeys(obj, SafeKeys[type], userChanging ? FixedKeys : []);
+    if (typeof type === "string" && !SafeKeys[type]) return false;
+    return leaveSomeKeys(
+        obj,
+        Array.isArray(type) ? type : SafeKeys[type],
+        userChanging ? FixedKeys : []
+    );
 };

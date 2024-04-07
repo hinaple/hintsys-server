@@ -8,11 +8,15 @@ module.exports = function(sequelize, DataTypes) {
       primaryKey: true
     },
     label: {
-      type: DataTypes.STRING(10),
+      type: DataTypes.STRING(16),
       allowNull: false
     },
     value: {
       type: DataTypes.STRING(100),
+      allowNull: true
+    },
+    type: {
+      type: DataTypes.STRING(10),
       allowNull: true
     },
     edit_level: {

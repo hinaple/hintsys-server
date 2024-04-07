@@ -75,17 +75,32 @@
 | ---------- | --------- | -------- |
 | Express.js | Socket.io | MySQL    |
 
-## Environment File
+## GitIgnored Files
 
-> ℹ️ Create an environment file at `/.env`.
+-   `/app/public/upload/`(Required)
 
-```
-HINTSYS_PORT={MAIN_SYSTEM_OUT_PORT}
-MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}
-MYSQL_PORT={MYSQL_OUT_PORT}
-```
+    > A directory for uploading files.
 
----
+-   `/.env`(Required)
+
+    > An environment file
+
+    ```
+    HINTSYS_PORT={MAIN_SYSTEM_OUT_PORT}
+    MYSQL_ROOT_PASSWORD={MYSQL_ROOT_PASSWORD}
+    MYSQL_PORT={MYSQL_OUT_PORT}
+    ```
+
+-   `/app/lib/security/encryptPw.js`(Optional)
+
+    > Without this file, the passwords will be stored as plain text.
+
+    ```javascript
+    module.exports = async (str, salt) => {
+        //Hashing codes here
+        return hash;
+    };
+    ```
 
 ## Document
 
@@ -133,16 +148,19 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 > | createdAt   | When the data has been created                                   | Date |         |
 > | updatedAt   | When the data has been updated at last                           | Date |         |
 
-##### Playing status value table
+-   <details>
+      <summary><b>Playing status value table</b></summary>
 
-> Negative numbers mean 'cannot access to the device'.
-> | Value | meaning |
-> | ----- | ------------------------------------------ |
-> | `0` | Ready |
-> | `1` | Playing |
-> | `2` | Paused |
-> | `-1` | Ended |
-> | `-2` | Disconnected(Not sure if it would be used) |
+    > ℹ️ Negative numbers mean 'cannot access to the device'.
+    > | Value | meaning |
+    > | ----- | ------------------------------------------ |
+    > | `0` | Ready |
+    > | `1` | Playing |
+    > | `2` | Paused |
+    > | `-1` | Ended |
+    > | `-2` | Disconnected(Not sure if it would be used) |
+
+      </details>
 
 </details>
 <a name="player_info-object"></a>
@@ -196,29 +214,41 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 > | createdAt | When the account has been created                 | Date        |         |
 > | updatedAt | When the account has been updated at last         | Date        |         |
 
-##### Security Level Indicator
+-   <details>
+    <summary>
+    <b>
+    Security Level Indicator
+    </b>
+    </summary>
 
-> ℹ️ 'Allowed' informations are stored in `data` column.
+    > ℹ️ 'Allowed' informations are stored in `data` column.
 
-> | level | account type              | accessable area                                                                                |
-> | ----- | ------------------------- | ---------------------------------------------------------------------------------------------- |
-> | 0     | Default Account           | N/A                                                                                            |
-> | 1     | Low-Ranked Hint Device    | **readonly**: Allowed theme and hint informations                                              |
-> | 2     | High-Ranked Hint Device   | **readonly**: Every themes and hints inforations                                               |
-> | 3     | Low-Ranked Center Device  | Managing play info related to allowed themss and hints, **readonly**: Allowed themes and hints |
-> | 4     | High-Ranked Center Device | Manaing every play infos, **readonly**: Every themes and hints                                 |
-> | 5     | Low-Ranked Administrator  | Managing informations only related to allowed themes                                           |
-> | 6     | High-Ranked Administrator | Managing every informations                                                                    |
-> | 9     | Master                    | Able to access and edit every data except accounts ranked the same                             |
-> | 99    | Root                      | God                                                                                            |
+    > | level | account type              | accessable area                                                                                |
+    > | ----- | ------------------------- | ---------------------------------------------------------------------------------------------- |
+    > | 0     | Default Account           | N/A                                                                                            |
+    > | 1     | Low-Ranked Hint Device    | **readonly**: Allowed theme and hint informations                                              |
+    > | 2     | High-Ranked Hint Device   | **readonly**: Every themes and hints inforations                                               |
+    > | 3     | Low-Ranked Center Device  | Managing play info related to allowed themss and hints, **readonly**: Allowed themes and hints |
+    > | 4     | High-Ranked Center Device | Manaing every play infos, **readonly**: Every themes and hints                                 |
+    > | 5     | Low-Ranked Administrator  | Managing informations only related to allowed themes                                           |
+    > | 6     | High-Ranked Administrator | Managing every informations                                                                    |
+    > | 9     | Master                    | Able to access and edit every data except accounts ranked the same                             |
+    > | 99    | Root                      | God                                                                                            |
 
-##### `data` column form
+    </details>
 
-```
-{
-    "allowed": [ theme_idx1, theme_idx2, ... ]
-}
-```
+-   <details>
+    <summary>
+    <b>
+    <code>data</code> column form
+    </b>
+    </summary>
+
+    ```
+    {
+        "allowed": [ theme_idx1, theme_idx2, ... ]
+    }
+    ```
 
 </details>
 <a name="setting-object"></a>
@@ -227,8 +257,6 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 <code><b>Setting</b></code>
 <code>(A single Configuration)</code>
 </summary>
-
-> ℹ️ This table is free to use depending on how the clients work.
 
 ##### Setting
 
@@ -239,14 +267,7 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 > | read_level | The lowest account level that can read this data | Int    | 0       |
 > | edit_level | The lowest account level that can edit this data | Int    | 5       |
 
-##### Configurations List
-
-> | label         | description                              | default value | read level | edit level |
-> | ------------- | ---------------------------------------- | ------------- | ---------- | ---------- |
-> | loading_image | will be shown when every clients loading |               | `1`        | `9`        |
-> | hint_image_1  | will be shown on step 1 hint page        |               | `1`        | `9`        |
-> | hint_image_2  | will be shown on step 2 hint page        |               | `1`        | `9`        |
-> | hint_image_2  | will be shown on step 3 hint page        |               | `1`        | `9`        |
+> ℹ️ See the full configurations list at `/app/lib/settings/DefaultSettings.json`.
 
 </details>
 
@@ -254,7 +275,7 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ### Endpoints
 
-> ℹ️ Every restful endpoint paths start with **`http(s)://{HOST}/api`**.
+> ℹ️ Every restful endpoint paths start with **`http(s)://{HOST}/api/v1`**.
 
 #### Theme
 
@@ -281,12 +302,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"idx": {CREATED_DATA_IDX}}`   |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -345,12 +366,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"affectedKeys": [...]]}`      |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -419,12 +440,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"idx": {CREATED_DATA_IDX}}`   |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -457,12 +478,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"affectedKeys": [...]}`       |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -496,12 +517,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"idx": {CREATED_DATA_IDX}}`   |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -615,12 +636,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"idx": {CREATED_DATA_IDX}}`   |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -653,12 +674,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"affectedKeys": [...]}`       |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -692,12 +713,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                            |
-> | --------- | ------------------ | ----------------------------------- |
-> | `201`     | `application/json` | `{"message": "Added Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`        |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`     |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`       |
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
 
 </details>
 
@@ -762,11 +783,11 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Created Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                      |
+> | --------- | ------------------ | ----------------------------- |
+> | `201`     | `application/json` | `{"idx": {CREATED_DATA_IDX}}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`  |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}` |
 
 </details>
 
@@ -774,7 +795,7 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 <summary>
 <code>GET</code>
-<code><b>/account/{id}</b></code>
+<code><b>/account/id/{id}</b></code>
 <code>(Get account infotmation and also can be used for logging in)</code>
 </summary>
 
@@ -830,12 +851,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                              |
-> | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"affectedKeys": [...]}`       |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -870,7 +891,7 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 > | http code | content-type       | response                              |
 > | --------- | ------------------ | ------------------------------------- |
-> | `201`     | `application/json` | `{"message": "Changed Successfully"}` |
+> | `201`     | `application/json` | `{"message": "Patched Successfully"}` |
 > | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
 > | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
 > | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
@@ -889,8 +910,15 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 > | name              | required | data type | description                |
 > | ----------------- | -------- | --------- | -------------------------- |
-> | authentication-id | Y        | String    | Requires level 6 or higher |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
 > | authentication-pw | Y        | String    |                            |
+
+##### URI Query
+
+> | name      | required | data type | description                       |
+> | --------- | -------- | --------- | --------------------------------- |
+> | level     | N        | Int       | Searching target level            |
+> | theme_idx | N        | Int       | Searching target allowed themeIdx |
 
 ##### Responses
 
@@ -939,8 +967,8 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 <code>(Patch system settings)</code>
 </summary>
 
-> -   ⚠️ It'll be executed only when every `edit_level`s of target rows are equal to or higher than the level of the requesting account.
-> -   ⚠️ the `edit_level` and the `read_level` is can never be changed.
+> -   ⚠️ It'll be executed only when `edit_level`s of target rows are equal to or higher than the level of the requesting account.
+> -   ⚠️ the `edit_level` and the `read_level` are can never be changed.
 
 ##### Headers
 
@@ -957,12 +985,12 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Responses
 
-> | http code | content-type       | response                             |
-> | --------- | ------------------ | ------------------------------------ |
-> | `201`     | `application/json` | `{"message":"Patched Successfully"}` |
-> | `401`     | `application/json` | `{"message":"Unauthorized"}`         |
-> | `403`     | `application/json` | `{"message":"Low Security Lv"}`      |
-> | `500`     | `application/json` | `{"message":"Unknown Error"}`        |
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `{"affectedKeys": [...]}`       |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
 
@@ -991,7 +1019,7 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 > | http code | content-type       | response                                    |
 > | --------- | ------------------ | ------------------------------------------- |
-> | `201`     | `application/json` | `{"message":"{file_name_uuid}"}`            |
+> | `201`     | `application/json` | `{"filename":"{file_name_uuid}"}`           |
 > | `401`     | `application/json` | `{"message":"Unauthorized"}`                |
 > | `403`     | `application/json` | `{"message":"Low Security Lv"}`             |
 > | `413`     | `application/json` | `{"message":"Too Large File"}`              |

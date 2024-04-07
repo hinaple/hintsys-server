@@ -1,0 +1,37 @@
+{
+    "max-req-per-min": {
+        "default": 100,
+        "read_level": 9,
+        "edit_level": 9
+    },
+    "max-file-mb": {
+        "default": 2,
+        "read_level": 5,
+        "edit_level": 9
+    },
+    "allow-upload-ext": {
+        "default": ".jpg|.png|.bmp|.gif|.svg",
+        "read_level": 5,
+        "edit_level": 9
+    },
+    "loading_image": {
+        "default": "/src/loading.gif",
+        "read_level": 1,
+        "edit_level": 9
+    },
+    "step_image_1": {
+        "default": "/src/step_1.gif",
+        "read_level": 1,
+        "edit_level": 9
+    },
+    "step_image_2": {
+        "default": "/src/step_2.gif",
+        "read_level": 1,
+        "edit_level": 9
+    },
+    "step_image_3": {
+        "default": "/src/step_3.gif",
+        "read_level": 1,
+        "edit_level": 9
+    }
+}

@@ -3,17 +3,24 @@ const app = express();
 
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
-const Routes = require("./routes");
+const expressErrHandler = require("./lib/expressErrHandler");
+const apiRoutes = require("./routes");
 const tryRequire = require("./lib/tryRequire");
+const limitUtils = require("./lib/limiter");
+const checkSettings = require("./lib/settings/checkSettings");
 
 const env = require("./lib/nodeEnv");
 
-app.use(express.json());
-app.use(express.json({ limit: "2mb" }));
-app.use(fileUpload());
-if (env === "development") app.use(cors());
+// if (env === "production")
+checkSettings();
 
-Routes(app);
+app.use(expressErrHandler); //for errors from Express like Body-parser.
+app.use(express.json({ limit: "5mb" }));
+app.use(fileUpload());
+
+// app.use(cors()); //for access from the android app
+
+app.use("/api/v1", limitUtils.limiter, apiRoutes);
 
 app.listen(3001);
 
