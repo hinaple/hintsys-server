@@ -93,7 +93,7 @@ authEndpoint(
                 await models.themes.update(SafeUpdateData, {
                     where: { idx: targetIdx },
                 });
-                return [201, 1];
+                return [201, { affectedKeys: Object.keys(SafeUpdateData) }];
             },
             authLevel: 5,
             authCallback: isAllowedIdx,

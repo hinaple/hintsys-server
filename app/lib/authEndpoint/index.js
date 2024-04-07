@@ -39,8 +39,8 @@ module.exports = (path, endpoints, Router) => {
                 msgIdx;
 
             const HeaderAuth = [
-                req.headers["authorization-id"],
-                req.headers["authorization-pw"],
+                req.headers["authentication-id"],
+                req.headers["authentication-pw"],
             ];
 
             [statusCode, accountInfo, msgIdx = 0] = await checkHeadAuth(
@@ -66,12 +66,19 @@ module.exports = (path, endpoints, Router) => {
                         [statusCode, resultData] = data;
                     })
                     .catch((error) => {
-                        if (env === "production") {
-                            console.log("An error occurred:");
-                            console.log(error.name, "-", error.message);
-                        } else throw new Error(error);
+                        console.log("An error occurred:");
+                        console.log(error.name, "-", error.message);
 
-                        statusCode = 500;
+                        if (
+                            error.message
+                                .toLowerCase()
+                                .includes("data too long")
+                        ) {
+                            statusCode = 413;
+                            resultData = 1;
+                        } else statusCode = 500;
+
+                        if (env !== "production") throw new Error(error);
                     });
             else [statusCode, resultData] = cbResult;
 

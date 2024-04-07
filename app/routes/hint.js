@@ -77,7 +77,8 @@ authEndpoint(
                     },
                 });
                 if (!result[0]) return [404]; //0 row has been affected
-                else return [201, 1];
+                else
+                    return [201, { affectedKeys: Object.keys(SafeUpdateData) }];
             },
             authLevel: 5,
         },

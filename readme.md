@@ -1,10 +1,41 @@
 # ROOM ESCAPE HINT SYSTEM - **SERVER**
 
+<details>
+<summary>
+    <b>중요 안내 - 한국어 버전</b>
+</summary>
+
+> ⚠️ 이 프로젝트는 오직 서버사이드 시스템만 포함한다는 사실을 양지해주십시오. **클라이언트 코드는 외부에 공개되지 않습니다**
+
+> 누구나 이 프로제트의 코드를 자유롭게 사용할 수 있습니다. repository를 fork하거나, 코드를 수정하는 것은 완전히 허용됩니다. 그러나, 코드 수정 여부와 관련 없이, 이 프로젝트를 그 자체로 영리적인 목적으로 이용하는 것은 **절대** 불허합니다.
+>
+> 예를 들어, 아래의 예시들은 허용됩니다.
+>
+> -   ✅ 이 프로젝트를 이용한 시스템을 매장에 무상으로 제공
+> -   ✅ 본인의 매장에서 본 프로젝트를 활용한 시스템 사용
+>
+> 반면에, 아래에 제시된 사례들은 **절대** 금지합니다.
+>
+> -   🚫 본 프로젝트를 이용한 시스템을 금전적인 대가를 받고 판매
+> -   🚫 이 프로젝트를 영리적인 목적의 SaaS로 변형
+>
+> 금지된 사례에 해당하는 경우가 적발될 시 강력한 법적 제재를 가할 것입니다. 지적재산권을 존중해주시기를 정중히 부탁드리겠습니다.
+>
+> 물론, 금지된 사례를 포함하여, 어떤 경우든 사용에 대한 허락을 묻는 것은 괜찮습니다.
+> 이메일로 연락주십시오: fainthit@kakao.com
+>
+> 또한 이 프로젝트에 자유롭게 Pull Request를 생성해주세요! 감사합니다. 🤗
+>
+> (추신: 이 프로젝트 사용에 대한 권한을 금전적으로 판매하지 않습니다.)
+
+</details>
+<br>
+
 > ⚠️ Please note that this project contains only the serverside system. **The client code is not opened in the public.**
 
 > Anyone can freely use the code for this project. It is completely acceptable to fork the repository, or modify the code. However, I **absolutely** prohibit the use of this project for commercial purposes, regardless of whether the code is modified or not.
 >
-> For example, the examples below allow.
+> For example, the cases below allow.
 >
 > -   ✅ Using this project for free to provide the system to stores
 > -   ✅ Using the system using this project in your store
@@ -36,7 +67,7 @@
 ![DataBase Diagram](DBstructure.png)
 
 > Diagram updated version: **0.0.0**.
-> Please check again with database dump if it's different with the current version. I might forget to update it.
+> Please check again with database dump if it's different with the current version. I might forgot to update it.
 
 ## Tech Stack
 
@@ -237,10 +268,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 6 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 6 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Body
 
@@ -269,10 +300,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 1 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 1 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Responses
 
@@ -295,10 +326,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 5 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -333,10 +364,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 1 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 1 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -367,10 +398,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 5 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -407,10 +438,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 5 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -445,10 +476,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 5 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -484,10 +515,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 5 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -525,10 +556,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 3 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 3 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -538,10 +569,9 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### URI Query
 
-> | name   | required | data type | description                                      |
-> | ------ | -------- | --------- | ------------------------------------------------ |
-> | status | N        | Int       | Get results only have the same `status` value    |
-> | theme  | N        | Int       | Get results only have the same `theme_idx` value |
+> | name   | required | data type | description                                   |
+> | ------ | -------- | --------- | --------------------------------------------- |
+> | status | N        | Int       | Get results only have the same `status` value |
 
 ##### Responses
 
@@ -564,10 +594,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 3 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 3 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -577,11 +607,11 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Body
 
-> | name     | required | data type | description                                              |
-> | -------- | -------- | --------- | -------------------------------------------------------- |
-> | status   | N        | Int       | The default value is `0`.                                |
-> | staredAt | N        | Date      | The default value is current time.                       |
-> | add_sec  | N        | int       | The added seconds to playtime. The default value is `0`. |
+> | name      | required | data type | description                                              |
+> | --------- | -------- | --------- | -------------------------------------------------------- |
+> | status    | N        | Int       | The default value is `0`.                                |
+> | startedAt | N        | Date      | The default value is current time.                       |
+> | add_sec   | N        | int       | The added seconds to playtime. The default value is `0`. |
 
 ##### Responses
 
@@ -604,10 +634,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 3 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 3 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -636,16 +666,16 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 <summary>
 <code>PATCH</code>
-<code><b>/playinfo/{info-idx}/addTime</b></code>
+<code><b>/playinfo/{info-idx}/addseconds</b></code>
 <code>(Add seconds on playtime)</code>
 </summary>
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 3 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 3 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -655,9 +685,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Body
 
-> | name    | required | data type | description                            |
-> | ------- | -------- | --------- | -------------------------------------- |
-> | add_sec | Y        | Int       | Of course it can be a negative number. |
+> | name    | required | data type | description                                                                                         |
+> | ------- | -------- | --------- | --------------------------------------------------------------------------------------------------- |
+> | add_sec | Y        | Int       | Of course it can be a negative number.                                                              |
+> | reset   | N        | Boolean   | If `true`, the requested `add_sec` value replaces the original value. The default value is `false`. |
 
 ##### Responses
 
@@ -680,10 +711,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 5 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -714,10 +745,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 6 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 6 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Body
 
@@ -749,10 +780,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                                             |
-> | ---------------- | -------- | --------- | ------------------------------------------------------- |
-> | Authorization-id | Y        | String    | If it's not equal to `{id}`, requires level 6 or higher |
-> | Authorization-pw | Y        | String    |                                                         |
+> | name              | required | data type | description                                             |
+> | ----------------- | -------- | --------- | ------------------------------------------------------- |
+> | authentication-id | Y        | String    | If it's not equal to `{id}`, requires level 6 or higher |
+> | authentication-pw | Y        | String    |                                                         |
 
 ##### Parameters
 
@@ -780,10 +811,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 6 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 6 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Parameters
 
@@ -811,6 +842,44 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 <details>
 
 <summary>
+<code>PATCH</code>
+<code><b>/account/{idx}/pwchange</b></code>
+<code>(Change account password)</code>
+</summary>
+
+##### Headers
+
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 6 or higher |
+> | authentication-pw | Y        | String    |                            |
+
+##### Parameters
+
+> | name | data type | description        |
+> | ---- | --------- | ------------------ |
+> | idx  | Int       | Target account idx |
+
+##### Body
+
+> | name     | required | data type | description                   |
+> | -------- | -------- | --------- | ----------------------------- |
+> | password | Y        | String    | The password would be updated |
+
+##### Responses
+
+> | http code | content-type       | response                              |
+> | --------- | ------------------ | ------------------------------------- |
+> | `201`     | `application/json` | `{"message": "Changed Successfully"}` |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`          |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}`       |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`         |
+
+</details>
+
+<details>
+
+<summary>
 <code>GET</code>
 <code><b>/account/list</b></code>
 <code>(Get list of every available accounts list)</code>
@@ -818,10 +887,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 6 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 6 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Responses
 
@@ -846,10 +915,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description |
-> | ---------------- | -------- | --------- | ----------- |
-> | Authorization-id | Y        | String    |             |
-> | Authorization-pw | Y        | String    |             |
+> | name              | required | data type | description |
+> | ----------------- | -------- | --------- | ----------- |
+> | authentication-id | Y        | String    |             |
+> | authentication-pw | Y        | String    |             |
 
 ##### Responses
 
@@ -875,10 +944,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description |
-> | ---------------- | -------- | --------- | ----------- |
-> | Authorization-id | Y        | String    |             |
-> | Authorization-pw | Y        | String    |             |
+> | name              | required | data type | description |
+> | ----------------- | -------- | --------- | ----------- |
+> | authentication-id | Y        | String    |             |
+> | authentication-pw | Y        | String    |             |
 
 ##### Body
 
@@ -907,10 +976,10 @@ MYSQL_PORT={MYSQL_OUT_PORT}
 
 ##### Headers
 
-> | name             | required | data type | description                |
-> | ---------------- | -------- | --------- | -------------------------- |
-> | Authorization-id | Y        | String    | Requires level 5 or higher |
-> | Authorization-pw | Y        | String    |                            |
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
 
 ##### Form Data
 

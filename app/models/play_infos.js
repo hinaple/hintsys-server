@@ -29,7 +29,7 @@ module.exports = function(sequelize, DataTypes) {
       allowNull: true
     },
     add_sec: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.MEDIUMINT,
       allowNull: false,
       defaultValue: 0
     },

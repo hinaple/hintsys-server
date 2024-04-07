@@ -12,7 +12,6 @@
     "edit_level",
     "read_level",
     "label",
-    "status",
-    "startedAt",
-    "pausedAt"
+    "pausedAt",
+    "add_sec"
 ]
