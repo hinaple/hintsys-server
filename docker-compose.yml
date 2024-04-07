@@ -26,7 +26,7 @@ services:
         volumes:
             - ./app/public:/app/public
         environment:
-            DB_PASS: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
             NODE_ENV: "production"
             TZ: "Asia/Seoul"
 
