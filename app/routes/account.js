@@ -145,14 +145,21 @@ authEndpoint(
     Router
 );
 
+function makeNewAllowed(arr) {
+    const newArray = arr.filter((i) => isNaN(+i));
+    if (!newArray.length) return false;
+    return JSON.stringify({ allowed: newArray });
+}
+
 authEndpoint(
     "/:idx(\\d+)",
     {
         patch: {
-            callback: async (req, res, { level }) => {
+            callback: async (req, res, account) => {
                 const targetIdx = +req.params.idx;
 
                 const updateData = req.body?.updateData;
+                const allowedThemes = req.body?.allowedThemes;
 
                 const SafeUpdateData = makeSafeObj(updateData, "account", true);
                 if (!updateData || !Object.keys(SafeUpdateData).length)
@@ -165,7 +172,10 @@ authEndpoint(
                             message: "The level value is NaN.",
                         },
                     ];
-                if (SafeUpdateData.level && +SafeUpdateData.level >= level)
+                if (
+                    SafeUpdateData.level &&
+                    +SafeUpdateData.level >= account.level
+                )
                     return [
                         400,
                         {
@@ -173,12 +183,20 @@ authEndpoint(
                                 "Setting an account level higher than request account is not allowed",
                         },
                     ];
-                const result = await models.accounts.update(SafeUpdateData, {
-                    where: {
-                        idx: targetIdx,
-                        level: { [Op.lt]: level },
-                    },
-                });
+
+                if (Array.isArray(allowedThemes)) {
+                    const newAllowed = makeNewAllowed(allowedThemes);
+                    if (newAllowed) SafeUpdateData.data = newAllowed;
+                }
+                const result = await models.accounts.update(
+                    { SafeUpdateData },
+                    {
+                        where: {
+                            idx: targetIdx,
+                            level: { [Op.lt]: account.level },
+                        },
+                    }
+                );
 
                 if (!result[0]) return [404];
                 return [201, { affectedKeys: Object.keys(SafeUpdateData) }];

@@ -10,5 +10,8 @@ Router.use("/hint", hint);
 Router.use("/playinfo", playinfo);
 Router.use("/account", account);
 Router.use("/system", system);
+Router.get("/test", (req, res) => {
+    res.json({ message: "hi!" });
+});
 
 module.exports = Router;

@@ -84,24 +84,43 @@ authEndpoint(
     Router
 );
 
+async function getList(req, account, noSearch) {
+    const { count = 20, page = 0 } = req.query;
+    let targetIdx = +req.params.idx;
+    const { status } = req.query;
+
+    if (noSearch) targetIdx = getAllowed(account);
+
+    const result = await models.play_infos.findAll({
+        where: {
+            ...(targetIdx ? { theme_idx: targetIdx } : {}),
+            ...(status ? { status } : {}),
+        },
+        attributes: SafeKeys.play_info,
+        order: [["createdAt", "DESC"]],
+        limit: count,
+        offset: count * page,
+    });
+
+    return [200, result];
+}
+
 authEndpoint(
-    "/:idx(\\d+)/list",
+    "/list",
     {
         get: {
-            callback: async (req) => {
-                const targetIdx = +req.params.idx;
-                const { status } = req.query;
+            callback: (req, res, account) => getList(req, account, true),
+            authLevel: 3,
+        },
+    },
+    Router
+);
 
-                const result = await models.play_infos.findAll({
-                    where: {
-                        theme_idx: targetIdx,
-                        ...(status ? { status } : {}),
-                    },
-                    attributes: SafeKeys.play_info,
-                });
-
-                return [200, result];
-            },
+authEndpoint(
+    "/list/:idx(\\d*)",
+    {
+        get: {
+            callback: (req, res, account) => getList(req, account, false),
             authLevel: 3,
             authCallback: isAllowedIdx,
         },

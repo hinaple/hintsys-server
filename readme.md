@@ -58,7 +58,7 @@
 
 | Current Version |
 | --------------- |
-| 0.0.1           |
+| 0.1.0           |
 
 ## Database Diagram
 
@@ -66,7 +66,7 @@
 
 ![DataBase Diagram](DBstructure.png)
 
-> Diagram updated version: **0.0.1**.
+> Diagram updated version: **0.1.0**.
 > Please check again with database dump if it's different with the current version. I might forgot to update it.
 
 ## Tech Stack
@@ -276,6 +276,24 @@
 ### Endpoints
 
 > ℹ️ Every restful endpoint paths start with **`http(s)://{HOST}/api/v1`**.
+
+#### Testing
+
+<details>
+
+<summary>
+<code>GET</code>
+<code><b>/test</b></code>
+<code>(Create a new theme info with title)</code>
+</summary>
+
+##### Responses
+
+> | http code | content-type       | response             |
+> | --------- | ------------------ | -------------------- |
+> | `201`     | `application/json` | `{"message": "hi!"}` |
+
+</details>
 
 #### Theme
 
@@ -571,7 +589,7 @@
 
 <summary>
 <code>GET</code>
-<code><b>/playinfo/{theme-idx}/list</b></code>
+<code><b>/playinfo/list/{theme-idx}</b></code>
 <code>(Get available playing info list)</code>
 </summary>
 
@@ -584,15 +602,17 @@
 
 ##### Parameters
 
-> | name      | data type | description      |
-> | --------- | --------- | ---------------- |
-> | theme-idx | Int       | Target theme idx |
+> | name      | required | data type | description      |
+> | --------- | -------- | --------- | ---------------- |
+> | theme-idx | N        | Int       | Target theme idx |
 
 ##### URI Query
 
-> | name   | required | data type | description                                   |
-> | ------ | -------- | --------- | --------------------------------------------- |
-> | status | N        | Int       | Get results only have the same `status` value |
+> | name   | required | data type | description                                      |
+> | ------ | -------- | --------- | ------------------------------------------------ |
+> | status | N        | Int       | Get results only have the same `status` value    |
+> | count  | N        | Int       | Max count of results, the default value is `20`. |
+> | page   | N        | Int       | Result page number, based on `count`.            |
 
 ##### Responses
 
@@ -845,9 +865,10 @@
 
 ##### Body
 
-> | name       | required | data type | description                                      |
-> | ---------- | -------- | --------- | ------------------------------------------------ |
-> | updateData | Y        | Object    | `{"{updatingValueKey}": "{valueToUpdate}", ...}` |
+> | name          | required | data type | description                                      |
+> | ------------- | -------- | --------- | ------------------------------------------------ |
+> | updateData    | Y        | Object    | `{"{updatingValueKey}": "{valueToUpdate}", ...}` |
+> | allowedThemes | N        | Array     | Array of new alowed themes indexes.              |
 
 ##### Responses
 
