@@ -20,7 +20,7 @@
         "updatedAt"
     ],
     "player_info": ["name", "tel"],
-    "hint": ["idx", "code", "progress"],
+    "hint": ["idx", "code", "progress", "order"],
     "hint_content": ["idx", "step", "contents"],
     "account": [
         "idx",

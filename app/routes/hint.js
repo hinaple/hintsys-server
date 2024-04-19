@@ -86,6 +86,68 @@ authEndpoint(
 );
 
 authEndpoint(
+    "/:idx(\\d+)/setorder",
+    {
+        patch: {
+            callback: async (req, res, account) => {
+                const targetIdx = +req.params.idx;
+
+                const order = req.body?.order;
+                if (isNaN(+order)) return [400, 1];
+
+                const allowed = getAllowed(account);
+
+                const originHint = await models.hints.findOne({
+                    where: {
+                        idx: targetIdx,
+                        ...(allowed ? { theme_idx: allowed } : {}), //for low ranked
+                    },
+                });
+                if (!originHint) return [404];
+
+                if (originHint.order === +order)
+                    return [201, { message: "Same Value" }];
+
+                await models.hints.update(
+                    { order },
+                    { where: { idx: targetIdx } }
+                );
+                if (order < originHint.order)
+                    await models.hints.increment(
+                        { order: 1 },
+                        {
+                            where: {
+                                order: {
+                                    [Op.gte]: order,
+                                    [Op.lt]: originHint.order,
+                                },
+                                idx: { [Op.not]: targetIdx },
+                            },
+                        }
+                    );
+                else
+                    await models.hints.increment(
+                        { order: -1 },
+                        {
+                            where: {
+                                order: {
+                                    [Op.gt]: originHint.order,
+                                    [Op.lte]: order,
+                                },
+                                idx: { [Op.not]: targetIdx },
+                            },
+                        }
+                    );
+
+                return [201, 1];
+            },
+            authLevel: 5,
+        },
+    },
+    Router
+);
+
+authEndpoint(
     "/content/:idx(\\d+)",
     {
         post: {

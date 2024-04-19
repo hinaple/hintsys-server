@@ -504,6 +504,43 @@
 > | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
 
 </details>
+<details>
+
+<summary>
+<code>PATCH</code>
+<code><b>/hint/{hint-idx}/setorder</b></code>
+<code>(Update the hint information except content)</code>
+</summary>
+
+##### Headers
+
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
+
+##### Parameters
+
+> | name     | data type | description     |
+> | -------- | --------- | --------------- |
+> | hint-idx | Int       | Target hint idx |
+
+##### Body
+
+> | name  | required | data type | description                               |
+> | ----- | -------- | --------- | ----------------------------------------- |
+> | order | Y        | Int       | The order value that target hint will get |
+
+##### Responses
+
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `Patched Successfully`          |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
+
+</details>
 
 <details>
 

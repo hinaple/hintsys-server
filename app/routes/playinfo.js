@@ -98,8 +98,8 @@ async function getList(req, account, noSearch) {
         },
         attributes: SafeKeys.play_info,
         order: [["createdAt", "DESC"]],
-        limit: count,
-        offset: count * page,
+        limit: +count,
+        offset: +count * +page,
     });
 
     return [200, result];

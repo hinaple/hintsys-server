@@ -35,6 +35,7 @@ authEndpoint(
                 const themes = await models.themes.findAll({
                     attributes: SafeKeys.theme,
                     where: alloweds ? { idx: alloweds } : {},
+                    order: [["createdAt", "DESC"]],
                 }); //filtering for low-ranks
 
                 return [200, themes];
@@ -60,16 +61,18 @@ authEndpoint(
                             model: models.hints, //with hints
                             as: "hints",
                             attributes: SafeKeys.hint,
-                            order: [["order", "ASC"]],
                             include: [
                                 {
                                     model: models.hint_contents,
                                     as: "hint_contents",
                                     attributes: SafeKeys.hint_content, //with contents
-                                    order: [["step", "ASC"]],
                                 },
                             ],
                         },
+                    ],
+                    order: [
+                        ["hints", "order", "ASC"],
+                        ["hints", "hint_contents", "step", "ASC"],
                     ],
                     raw: false,
                 });

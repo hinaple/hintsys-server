@@ -275,6 +275,7 @@ authEndpoint(
                             { idx: account.idx },
                         ],
                         ...(targetLevel ? { level: targetLevel } : {}),
+                        order: [["createdAt", "DESC"]],
                     },
                 });
 
