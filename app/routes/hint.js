@@ -148,6 +148,43 @@ authEndpoint(
 );
 
 authEndpoint(
+    "/:idx(\\d+)/contents",
+    {
+        patch: {
+            callback: async (req, res, account) => {
+                const targetIdx = +req.params.idx;
+                const contents = req.body?.contents;
+                console.log(contents);
+                if (!contents || !Array.isArray(contents)) return [400, 0];
+
+                const allowed = getAllowed(account);
+
+                if (allowed) {
+                    const tempHint = await models.hints.findOne({
+                        where: { idx: targetIdx, theme_idx: allowed },
+                    });
+                    if (!tempHint) return [404];
+                }
+                const r = await models.hint_contents.bulkCreate(
+                    contents.map((c) => {
+                        return {
+                            hint_idx: targetIdx,
+                            ...makeSafeObj(c, "hint_content"),
+                        };
+                    }),
+                    {
+                        updateOnDuplicate: ["contents"],
+                    }
+                );
+                return [201];
+            },
+            authLevel: 5,
+        },
+    },
+    Router
+);
+
+authEndpoint(
     "/content/:idx(\\d+)",
     {
         post: {

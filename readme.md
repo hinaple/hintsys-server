@@ -58,7 +58,7 @@
 
 | Current Version |
 | --------------- |
-| 0.1.0           |
+| 0.2.0           |
 
 ## Database Diagram
 
@@ -284,7 +284,7 @@
 <summary>
 <code>GET</code>
 <code><b>/test</b></code>
-<code>(Create a new theme info with title)</code>
+<code>(Test if the server is running)</code>
 </summary>
 
 ##### Responses
@@ -509,7 +509,7 @@
 <summary>
 <code>PATCH</code>
 <code><b>/hint/{hint-idx}/setorder</b></code>
-<code>(Update the hint information except content)</code>
+<code>(Update the hint order)</code>
 </summary>
 
 ##### Headers
@@ -543,11 +543,48 @@
 </details>
 
 <details>
+<summary>
+<code>PATCH</code>
+<code><b>/hint/{hint-idx}/contents</b></code>
+<code>(Update the multiple hint contents)</code>
+</summary>
+
+##### Headers
+
+> | name              | required | data type | description                |
+> | ----------------- | -------- | --------- | -------------------------- |
+> | authentication-id | Y        | String    | Requires level 5 or higher |
+> | authentication-pw | Y        | String    |                            |
+
+##### Parameters
+
+> | name     | data type | description     |
+> | -------- | --------- | --------------- |
+> | hint-idx | Int       | Target hint idx |
+
+##### Body
+
+> | name     | required | data type | description                                                                                                                                                              |
+> | -------- | -------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+> | contents | Y        | Array     | Array of `{ contents [, step, idx] }`. If `idx` is duplicated with the other row, update `contents` value on the row. If not, create new row with `contents` and `step`. |
+
+##### Responses
+
+> | http code | content-type       | response                        |
+> | --------- | ------------------ | ------------------------------- |
+> | `201`     | `application/json` | `Processed Successfully`        |
+> | `401`     | `application/json` | `{"message":"Unauthorized"}`    |
+> | `403`     | `application/json` | `{"message":"Low Security Lv"}` |
+> | `500`     | `application/json` | `{"message":"Unknown Error"}`   |
+
+</details>
+
+<details>
 
 <summary>
 <code>POST</code>
 <code><b>/hint/content/{hint-idx}</b></code>
-<code>(Create new hint content)</code>
+<code>(Create a new single hint content)</code>
 </summary>
 
 ##### Headers
@@ -586,7 +623,7 @@
 <summary>
 <code>PATCH</code>
 <code><b>/hint/content/{content-idx}</b></code>
-<code>(Update the hint content)</code>
+<code>(Update the specific hint content)</code>
 </summary>
 
 ##### Headers

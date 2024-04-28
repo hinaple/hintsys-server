@@ -9,15 +9,14 @@ const env = require("../nodeEnv");
  *
  * @param {String} path Path string
  * @param {{
- *  post: Endpoint,
- *  get: Endpoint,
- *  put: Endpoint,
- *  patch: Endpoint,
- *  delete: Endpoint,
- *  head: Endpoint,
- *  connect: Endpoint,
- *  options: Endpoint,
- *  patch: Endpoint
+ *  post: Endpoint|EndpointCB,
+ *  get: Endpoint|EndpointCB,
+ *  put: Endpoint|EndpointCB,
+ *  patch: Endpoint|EndpointCB,
+ *  delete: Endpoint|EndpointCB,
+ *  head: Endpoint|EndpointCB,
+ *  connect: Endpoint|EndpointCB,
+ *  options: Endpoint|EndpointCB
  * }} endpoints endpoint methods and callbacks
  * @param {Object} Router express Router Object
  */
@@ -101,8 +100,8 @@ module.exports = (path, endpoints, Router) => {
  * @typedef {Object} Endpoint
  *
  * @property {EndpointCB} callback
- * @property {Integer} authLevel
- * @property {import("./checkAccount").ConditionCB} authCallback
+ * @property {Number} authLevel
+ * @property {import("./checkAccount").ConditionCB} [authCallback]
  */
 
 /**
@@ -112,10 +111,10 @@ module.exports = (path, endpoints, Router) => {
  * @param {Object} resolve An express resolve object
  * @param {Object} account A signed in account info
  *
- * @returns {Integer|{{
- *  code: Integer,
+ * @returns {Int|{
+ *  code: Int,
  *  data: Object
- * }}}
+ * }}
  * If the endpoint returns Number,
  * it resolve it as HTTP status code and add a message automatically
  * if there is a message data corresponding to the code.
