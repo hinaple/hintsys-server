@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
-
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
+const http = require("http");
+
 const expressErrHandler = require("./lib/expressErrHandler");
 const apiRoutes = require("./routes");
 const tryRequire = require("./lib/tryRequire");
 const limitUtils = require("./lib/limiter");
 const checkSettings = require("./lib/settings/checkSettings");
+const Socket = require("./lib/socket");
 
 const env = require("./lib/nodeEnv");
 
@@ -21,14 +23,17 @@ app.use(
     })
 );
 
-app.use(cors());
+if (env === "development") app.use(cors());
 
 app.use("/src", express.static("public"));
 app.use("/api/v1", limitUtils.limiter, apiRoutes);
 
-app.listen(3001);
+const server = http.createServer(app);
+Socket.start(server);
 
-console.log("Server is started as " + env);
+server.listen(3001, () => {
+    console.log("Server is started as " + env);
+});
 
 //This is for developing, makes easy to test anything.
 //If you want to use it,
