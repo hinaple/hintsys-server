@@ -21,6 +21,7 @@ module.exports = {
                 methods: ["GET", "POST"],
             },
             pingInterval: 5000,
+            pingTimeout: 1000,
         });
         io.on("connection", (socket) => {
             socket.on("setTheme", async (data, cb) => {
