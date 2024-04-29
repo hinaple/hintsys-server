@@ -15,7 +15,11 @@ checkSettings();
 
 app.use(expressErrHandler); //for errors from Express like Body-parser.
 app.use(express.json({ limit: "5mb" }));
-app.use(fileUpload());
+app.use(
+    fileUpload({
+        limits: { fileSize: 5 * 1024 * 1024 },
+    })
+);
 
 app.use(cors());
 
