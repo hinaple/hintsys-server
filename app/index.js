@@ -23,7 +23,7 @@ app.use(
     })
 );
 
-if (env === "development") app.use(cors());
+app.use(cors());
 
 app.use("/src", express.static("public"));
 app.use("/api/v1", limitUtils.limiter, apiRoutes);
