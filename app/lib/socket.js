@@ -15,17 +15,12 @@ function clearRoom(target) {
 
 module.exports = {
     start: (http) => {
-        io = new Server(
-            http,
-            env === "development"
-                ? {
-                      cors: {
-                          origin: "*",
-                          methods: ["GET", "POST"],
-                      },
-                  }
-                : {}
-        );
+        io = new Server(http, {
+            cors: {
+                origin: "*",
+                methods: ["GET", "POST"],
+            },
+        });
         io.on("connection", (socket) => {
             socket.on("setTheme", async (data, cb) => {
                 const auth = await areIdPwAvail(
