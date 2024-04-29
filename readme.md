@@ -1093,8 +1093,8 @@
 
 <summary>
 <code>POST</code>
-<code><b>/system/image</b></code>
-<code>(Upload an image file)</code>
+<code><b>/system/upload</b></code>
+<code>(Upload a file)</code>
 </summary>
 
 ##### Headers
@@ -1106,9 +1106,9 @@
 
 ##### Form Data
 
-> | name  | required | data type | description                                                           |
-> | ----- | -------- | --------- | --------------------------------------------------------------------- |
-> | image | Y        | blob      | File size must be less than 2mb, allowed only: .jpg, .png, .bmp, .gif |
+> | name | required | data type | description                                                         |
+> | ---- | -------- | --------- | ------------------------------------------------------------------- |
+> | file | Y        | blob      | File size must be less than 2mb, allowed extensions only in setting |
 
 ##### Responses
 

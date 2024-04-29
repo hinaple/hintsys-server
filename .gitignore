@@ -2,4 +2,4 @@
 node_modules
 encryptPw.js
 testSpace.js
-public/upload/
+app/public/upload/

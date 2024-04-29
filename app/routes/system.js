@@ -52,7 +52,7 @@ authEndpoint(
 
                 if (!result)
                     return [
-                        400,
+                        415,
                         {
                             message:
                                 "The file is too big or has unacceptable extension",

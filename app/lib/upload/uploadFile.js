@@ -6,7 +6,6 @@ const checkFile = require("./checkUploadable");
 module.exports = async (filename, file) => {
     const ext = path.extname(file.name);
     if (!checkFile(file, ext)) return false;
-
     const finalFilename = filename + ext;
 
     await fs.writeFile(

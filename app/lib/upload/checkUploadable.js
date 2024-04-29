@@ -7,7 +7,7 @@ changeEvt.add("max-file-mb", {
     cb: (v) => {
         if (isNaN(v)) return;
         FILESIZE_LIMIT_MB = +v;
-        console.log(`\n### UPLOAD SIZE LIMIT IS ${v} NOW. ###\n`);
+        console.log(`\n### UPLOAD SIZE LIMIT IS ${v}MB NOW. ###\n`);
     },
     init: true,
 });
@@ -24,6 +24,8 @@ changeEvt.add("allow-upload-ext", {
 });
 
 module.exports = (file, ext) => {
-    ALLOWED_EXTENSIONS.includes(ext) &&
-        file.size <= FILESIZE_LIMIT_MB * 1000000;
+    return (
+        ALLOWED_EXTENSIONS.includes(ext) &&
+        file.size <= FILESIZE_LIMIT_MB * 1000000
+    );
 };
