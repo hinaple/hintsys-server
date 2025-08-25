@@ -9,7 +9,7 @@ const apiRoutes = require("./routes");
 const tryRequire = require("./lib/tryRequire");
 const limitUtils = require("./lib/limiter");
 const checkSettings = require("./lib/settings/checkSettings");
-const Socket = require("./lib/socket");
+// const Socket = require("./lib/socket");
 
 const env = require("./lib/nodeEnv");
 
@@ -29,7 +29,7 @@ app.use("/src", express.static("public"));
 app.use("/api/v1", limitUtils.limiter, apiRoutes);
 
 const server = http.createServer(app);
-Socket.start(server);
+// Socket.start(server);
 
 server.listen(3001, () => {
     console.log("Server is started as " + env);

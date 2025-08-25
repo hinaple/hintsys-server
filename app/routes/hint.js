@@ -24,60 +24,77 @@ authEndpoint(
     {
         post: {
             callback: async (req) => {
-                const targetIdx = +req.params.idx;
+                try {
+                    const targetIdx = +req.params.idx;
 
-                let { code = "TEST", progress, order } = req.body;
-                if (isNaN(+order)) {
-                    //set order as last
-                    order = (await getLastHintOrder(targetIdx)) + 1;
-                } else {
-                    //Increase orders of hints after current hint
-                    order = +order;
-                    await models.hints.increment(
-                        { order: 1 },
-                        {
-                            where: {
-                                theme_idx: targetIdx,
-                                order: {
-                                    [Op.gte]: order,
+                    let { code = "TEST", progress, order } = req.body;
+                    if (isNaN(+order)) {
+                        //set order as last
+                        order = (await getLastHintOrder(targetIdx)) + 1;
+                    } else {
+                        //Increase orders of hints after current hint
+                        order = +order;
+                        await models.hints.increment(
+                            { order: 1 },
+                            {
+                                where: {
+                                    theme_idx: targetIdx,
+                                    order: {
+                                        [Op.gte]: order,
+                                    },
                                 },
-                            },
-                        }
-                    );
+                            }
+                        );
+                    }
+
+                    let result = await models.hints.create({
+                        theme_idx: targetIdx,
+                        code,
+                        progress,
+                        order,
+                    });
+
+                    return [201, { idx: result.dataValues.idx }];
+                } catch (err) {
+                    console.error(err);
+                    return [500];
                 }
-
-                let result = await models.hints.create({
-                    theme_idx: targetIdx,
-                    code,
-                    progress,
-                    order,
-                });
-
-                return [201, { idx: result.dataValues.idx }];
             },
             authLevel: 5,
             authCallback: isAllowedIdx,
         },
         patch: {
             callback: async (req, res, account) => {
-                const targetIdx = +req.params.idx;
-                const allowed = getAllowed(account);
+                try {
+                    const targetIdx = +req.params.idx;
+                    const allowed = getAllowed(account);
 
-                const updateData = req.body?.updateData;
-                if (!updateData || !Object.keys(updateData).length)
-                    return [400, 1];
+                    const updateData = req.body?.updateData;
+                    if (!updateData || !Object.keys(updateData).length)
+                        return [400, 1];
 
-                const SafeUpdateData = makeSafeObj(updateData, "hint", true);
+                    const SafeUpdateData = makeSafeObj(
+                        updateData,
+                        "hint",
+                        true
+                    );
 
-                const result = await models.hints.update(SafeUpdateData, {
-                    where: {
-                        idx: targetIdx,
-                        ...(allowed ? { theme_idx: allowed } : {}), //for low ranked
-                    },
-                });
-                if (!result[0]) return [404]; //0 row has been affected
-                else
-                    return [201, { affectedKeys: Object.keys(SafeUpdateData) }];
+                    const result = await models.hints.update(SafeUpdateData, {
+                        where: {
+                            idx: targetIdx,
+                            ...(allowed ? { theme_idx: allowed } : {}), //for low ranked
+                        },
+                    });
+                    if (!result[0]) return [404]; //0 row has been affected
+                    else
+                        return [
+                            201,
+                            { affectedKeys: Object.keys(SafeUpdateData) },
+                        ];
+                } catch (err) {
+                    console.error(err);
+                    return [500];
+                }
             },
             authLevel: 5,
         },

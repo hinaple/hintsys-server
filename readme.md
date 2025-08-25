@@ -117,15 +117,16 @@
 
 ##### Theme
 
-> | key         | description                               | type   | default  |
-> | ----------- | ----------------------------------------- | ------ | -------- |
-> | idx         | The identified number of the theme        | Int    |          |
-> | name        | The name or the title of the theme        | String |          |
-> | time_limit  | The theme's limit time in minutes         | Int    | `60`     |
-> | icon        | The theme's icon image URL                | String |          |
-> | theme_color | Common CSS color of the theme point color | String | `'#000'` |
-> | createdAt   | When the theme has been created           | Date   |          |
-> | updatedAt   | When the theme has been updated at last   | Date   |          |
+> | key         | description                               | type    | default  |
+> | ----------- | ----------------------------------------- | ------- | -------- |
+> | idx         | The identified number of the theme        | Int     |          |
+> | name        | The name or the title of the theme        | String  |          |
+> | time_limit  | The theme's limit time in minutes         | Int     | `60`     |
+> | icon        | The theme's icon image URL                | String  |          |
+> | theme_color | Common CSS color of the theme point color | String  | `'#000'` |
+> | public      |                                           | Boolean | false    |
+> | createdAt   | When the theme has been created           | Date    |          |
+> | updatedAt   | When the theme has been updated at last   | Date    |          |
 
 </details>
 <a name="play_info-object"></a>

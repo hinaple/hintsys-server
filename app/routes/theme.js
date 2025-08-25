@@ -50,10 +50,13 @@ authEndpoint(
     "/:idx(\\d+)",
     {
         get: {
-            callback: async (req) => {
+            callback: async (req, res, account) => {
                 const targetIdx = +req.params.idx;
+                let isAllowed = account
+                    ? isAllowedIdx(account, req, targetIdx) === true
+                    : false;
 
-                const resultTheme = await models.themes.findAll({
+                const resultTheme = await models.themes.findOne({
                     where: { idx: targetIdx },
                     attributes: SafeKeys.theme,
                     include: [
@@ -76,12 +79,19 @@ authEndpoint(
                     ],
                     raw: false,
                 });
-                if (!resultTheme) return [404]; //No theme data
-
-                return [200, resultTheme[0].dataValues];
+                if (
+                    resultTheme &&
+                    (resultTheme.dataValues.public ||
+                        (account && account.level >= 1 && isAllowed))
+                )
+                    return [200, resultTheme.dataValues];
+                if (!account) return [401];
+                if (account && (account.level < 1 || !isAllowed))
+                    return [403, 1];
+                if (!resultTheme) return [404];
+                return [500];
             },
-            authLevel: 1,
-            authCallback: isAllowedIdx,
+            authLevel: 0,
         },
         patch: {
             callback: async (req) => {

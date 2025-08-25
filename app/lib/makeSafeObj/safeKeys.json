@@ -5,6 +5,7 @@
         "time_limit",
         "icon",
         "theme_color",
+        "public",
         "createdAt",
         "updatedAt"
     ],

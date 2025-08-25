@@ -14,11 +14,12 @@ const areIdPwAvail = require("./areIdPwAvail");
  * ]`
  */
 module.exports = async (id, pw, authLevel = 0, authCallback, cbData = {}) => {
-    const [availResult, account] = await areIdPwAvail(id, pw);
+    const [availResult, account] =
+        id && pw ? await areIdPwAvail(id, pw) : [null, null];
     //unavailable account information
-    if (!availResult) return [401, null];
+    if (authLevel && !availResult) return [401, null];
 
-    if ((account.level ?? 0) < authLevel) return [403, account];
+    if (authLevel && (account.level ?? 0) < authLevel) return [403, account];
 
     if (authCallback) {
         //some additional condition
@@ -38,6 +39,6 @@ module.exports = async (id, pw, authLevel = 0, authCallback, cbData = {}) => {
  * @param {Object} request An Express request object
  *
  * @returns {Array|Boolean}
- * `Array` - [ is_authorized, message_idx ]
+ * `Array` - [ is_authorized, message_idx, data? ]
  * `Boolean` - is_authorized
  */
